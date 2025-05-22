@@ -1,0 +1,5 @@
+git init
+git remote add origin https://github.com/kbc329/철민짱짱맨.git
+git add .
+git commit -m "first commit"
+git push -u origin main
