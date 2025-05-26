@@ -2,93 +2,68 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>차량 소액 내역</title>
+    <title>차량 소액 내역 입력</title>
     <style>
         body {
-            font-family: 'Segoe UI', sans-serif;
-            background-color: #f4f4f4;
-            text-align: center;
-            padding: 30px;
+            font-family: Arial, sans-serif;
+            padding: 2em;
+            background-color: #f5f5f5;
         }
-
-        .form-container {
-            background-color: white;
-            border-radius: 12px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        form {
+            background-color: #fff;
+            padding: 2em;
+            border-radius: 10px;
             max-width: 500px;
             margin: auto;
-            padding: 30px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-
-        h1 {
-            color: #333;
-        }
-
-        form label {
-            display: block;
-            margin: 10px 0 5px;
-            font-weight: bold;
-            text-align: left;
-        }
-
-        form input {
+        input, select {
             width: 100%;
-            padding: 8px;
+            padding: 10px;
+            margin-top: 1em;
             border: 1px solid #ccc;
-            border-radius: 6px;
+            border-radius: 5px;
         }
-
         button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #007BFF;
-            border: none;
-            border-radius: 6px;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-        }
-
-        .car-image {
+            margin-top: 1.5em;
+            padding: 10px;
             width: 100%;
-            max-width: 400px;
-            margin-bottom: 20px;
-            border-radius: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
         }
     </style>
 </head>
 <body>
-    <div class="form-container">
-        <img src="{{ url_for('static', filename='car.png') }}" alt="Car" class="car-image">
-        <h1>차량 소액 내역</h1>
-        <form action="/submit" method="POST">
-            <label>차종:</label>
-            <input type="text" name="car_type" required>
+    <h2 style="text-align:center;">차량 소액 내역 입력</h2>
+    <form action="/submit" method="post">
+        <label for="car_type">차종</label>
+        <input type="text" id="car_type" name="car_type" required>
 
-            <label>차량번호:</label>
-            <input type="text" name="car_number" required>
+        <label for="car_number">차량번호</label>
+        <input type="text" id="car_number" name="car_number" required>
 
-            <label>사용용도:</label>
-            <input type="text" name="usage_type" required>
+        <label for="purpose">사용용도</label>
+        <input type="text" id="purpose" name="purpose" required>
 
-            <label>사용처:</label>
-            <input type="text" name="location" required>
+        <label for="place">사용처</label>
+        <input type="text" id="place" name="place" required>
 
-            <label>사용금액:</label>
-            <input type="number" name="amount" required>
+        <label for="amount">사용금액</label>
+        <input type="number" id="amount" name="amount" required>
 
-            <label>사용자:</label>
-            <input type="text" name="user" required>
+        <label for="user">사용자</label>
+        <input type="text" id="user" name="user" required>
 
-            <label>날짜:</label>
-            <input type="date" name="date" required>
+        <label for="date">사용일자</label>
+        <input type="date" id="date" name="date" required>
 
-            <button type="submit">제출</button>
-        </form>
-    </div>
+        <button type="submit">제출</button>
+    </form>
 </body>
 </html>
