@@ -47,4 +47,5 @@ def index():
         return redirect("/")
 
     # 기본값: 오늘 날짜
-    today
+    today = datetime.today().strftime("%Y-%m-%d")
+    return render_template("index.html", today=today)
