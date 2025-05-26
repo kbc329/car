@@ -1,42 +1,39 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, request, render_template
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
+from datetime import datetime
 
 app = Flask(__name__)
 
-# Google Sheets 인증 설정
+# Google Sheets 인증
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
 creds = ServiceAccountCredentials.from_json_keyfile_name("credentials.json", scope)
 client = gspread.authorize(creds)
 
-# 사용할 Google Sheets 문서 열기
-sheet = client.open_by_url("https://docs.google.com/spreadsheets/d/1PoEirMAOoH4cgUjV95w9pswOsYREsfx5VDHBWb01GGk/edit?gid=0#gid=0")  # ✅ ID 직접 사용
-worksheet = sheet.sheet1  # 첫 번째 시트 사용
+# 📌 현재 접근 가능한 Google Sheets 이름 출력
+print("접근 가능한 구글 시트들:")
+print([sheet.title for sheet in client.openall()])  # 👈 여기서 "주차소액관리" 확인 가능
+
+# ✅ 아래에 정확한 시트 이름을 복사해서 붙여 넣으세요!
+sheet = client.open("주차소액관리").sheet1
 
 @app.route('/')
 def index():
-    return render_template('form.html')
+    return render_template('form.html')  # HTML 폼 템플릿 이름
 
 @app.route('/submit', methods=['POST'])
 def submit():
     car_type = request.form['car_type']
     car_number = request.form['car_number']
-    usage_type = request.form['usage_type']
-    location = request.form['location']
+    purpose = request.form['purpose']
+    place = request.form['place']
     amount = request.form['amount']
     user = request.form['user']
-    date = request.form['date']
+    date = request.form['date']  # 사용자 입력 날짜 사용
 
-    # Google Sheets에 데이터 추가
-    worksheet.append_row([car_type, car_number, usage_type, location, amount, user, date])
-
-    return redirect('/')
+    data = [car_type, car_number, purpose, place, amount, user, date]  # 날짜는 마지막 열
+    sheet.append_row(data)
+    return '저장되었습니다!'
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-# 시트 이름 리스트 출력 테스트
-sheets = client.openall()
-print("내가 접근할 수 있는 시트 목록:")
-for s in sheets:
-    print("-", s.title)
