@@ -1,39 +1,50 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect
 import gspread
-from oauth2client.service_account import ServiceAccountCredentials
+from google.oauth2.service_account import Credentials
+import os
+import json
 from datetime import datetime
 
 app = Flask(__name__)
 
-# Google Sheets 인증
-scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-creds = ServiceAccountCredentials.from_json_keyfile_name("credentials.json", scope)
-client = gspread.authorize(creds)
+# Google Sheets 인증 (환경변수 사용)
+creds_json = os.getenv("GOOGLE_CREDENTIALS")  # ✅ 환경변수 이름 변경됨
+if not creds_json:
+    raise ValueError("GOOGLE_CREDENTIALS 환경변수가 설정되지 않았습니다.")
 
-# 📌 현재 접근 가능한 Google Sheets 이름 출력
-print("접근 가능한 구글 시트들:")
-print([sheet.title for sheet in client.openall()])  # 👈 여기서 "주차소액관리" 확인 가능
+creds_dict = json.loads(creds_json)
+creds = Credentials.from_service_account_info(creds_dict)
+gc = gspread.authorize(creds)
 
-# ✅ 아래에 정확한 시트 이름을 복사해서 붙여 넣으세요!
-sheet = client.open("주차소액관리").sheet1
+# 구글 시트 열기 (시트 이름을 실제 사용 중인 이름으로 유지)
+SHEET_NAME = "차량_영수증"
+sh = gc.open(SHEET_NAME)
+worksheet = sh.sheet1
 
-@app.route('/')
+@app.route("/", methods=["GET", "POST"])
 def index():
-    return render_template('form.html')  # HTML 폼 템플릿 이름
+    if request.method == "POST":
+        data = {
+            "날짜": request.form.get("date"),
+            "차종": request.form.get("car_type"),
+            "차량번호": request.form.get("car_number"),
+            "사용용도": request.form.get("usage"),
+            "사용처": request.form.get("place"),
+            "사용금액": request.form.get("amount"),
+            "사용자": request.form.get("user")
+        }
 
-@app.route('/submit', methods=['POST'])
-def submit():
-    car_type = request.form['car_type']
-    car_number = request.form['car_number']
-    purpose = request.form['purpose']
-    place = request.form['place']
-    amount = request.form['amount']
-    user = request.form['user']
-    date = request.form['date']  # 사용자 입력 날짜 사용
+        # Google Sheets에 추가
+        worksheet.append_row([
+            data["날짜"],
+            data["차종"],
+            data["차량번호"],
+            data["사용용도"],
+            data["사용처"],
+            data["사용금액"],
+            data["사용자"]
+        ])
+        return redirect("/")
 
-    data = [car_type, car_number, purpose, place, amount, user, date]  # 날짜는 마지막 열
-    sheet.append_row(data)
-    return '저장되었습니다!'
-
-if __name__ == '__main__':
-    app.run(debug=True)
+    # 기본값: 오늘 날짜
+    today
