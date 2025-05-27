@@ -41,24 +41,24 @@
 </head>
 <body>
     <h2 style="text-align:center;">차량 소액 내역 입력</h2>
-    <form action="/submit" method="post">
+    <form action="/" method="post">
         <label for="car_type">차종</label>
-        <input type="text" id="car_type" name="car_type" required>
+        <input type="text" id="car_type" name="car_type" required placeholder="예: 소나타">
 
         <label for="car_number">차량번호</label>
-        <input type="text" id="car_number" name="car_number" required>
+        <input type="text" id="car_number" name="car_number" required placeholder="예: 12가1234">
 
-        <label for="purpose">사용용도</label>
-        <input type="text" id="purpose" name="purpose" required>
+        <label for="usage">사용용도</label>
+        <input type="text" id="usage" name="usage" required placeholder="예: 주차비">
 
         <label for="place">사용처</label>
-        <input type="text" id="place" name="place" required>
+        <input type="text" id="place" name="place" required placeholder="예: 서울역 주차장">
 
         <label for="amount">사용금액</label>
-        <input type="number" id="amount" name="amount" required>
+        <input type="number" id="amount" name="amount" required min="0" placeholder="예: 5000">
 
         <label for="user">사용자</label>
-        <input type="text" id="user" name="user" required>
+        <input type="text" id="user" name="user" required placeholder="예: 홍길동">
 
         <label for="date">사용일자</label>
         <input type="date" id="date" name="date" required>
