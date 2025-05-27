@@ -3,6 +3,7 @@ import gspread
 from google.oauth2.service_account import Credentials
 import os
 import json
+import base64
 from datetime import datetime
 from dotenv import load_dotenv
 
@@ -14,16 +15,16 @@ app = Flask(__name__)
 # Google Sheets API scope
 scope = ['https://www.googleapis.com/auth/spreadsheets']
 
-# 환경변수에서 서비스 계정 JSON 정보 읽기
-creds_json = os.getenv("GOOGLE_CREDENTIALS")
-if not creds_json:
-    raise ValueError("GOOGLE_CREDENTIALS 환경변수가 설정되지 않았습니다.")
+# Render용 base64 환경변수 읽기
+encoded = os.getenv("GOOGLE_CREDENTIALS_BASE64")
+if not encoded:
+    raise ValueError("GOOGLE_CREDENTIALS_BASE64 환경변수가 설정되지 않았습니다.")
 
-# \n 이스케이프 복구
-creds_json = creds_json.replace("\\n", "\n")
+# base64 디코딩 → UTF-8 문자열
+decoded = base64.b64decode(encoded).decode("utf-8")
 
-# JSON 문자열 → dict로 변환
-creds_dict = json.loads(creds_json)
+# JSON 문자열 → dict 변환
+creds_dict = json.loads(decoded)
 
 # Credentials 생성
 creds = Credentials.from_service_account_info(creds_dict, scopes=scope)
