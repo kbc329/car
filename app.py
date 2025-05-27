@@ -8,11 +8,9 @@ from datetime import datetime
 app = Flask(__name__)
 
 # Google Sheets 인증 (환경변수 사용)
-creds_json = os.getenv("GOOGLE_CREDENTIALS")  # ✅ 환경변수 이름 변경됨
+creds_json = os.getenv("GOOGLE_CREDENTIALS")
 if not creds_json:
     raise ValueError("GOOGLE_CREDENTIALS 환경변수가 설정되지 않았습니다.")
-
-creds_json = creds_json.replace("\\n", "\n")
 
 creds_dict = json.loads(creds_json)
 creds = Credentials.from_service_account_info(creds_dict)
@@ -51,3 +49,6 @@ def index():
     # 기본값: 오늘 날짜
     today = datetime.today().strftime("%Y-%m-%d")
     return render_template("index.html", today=today)
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
