@@ -13,7 +13,11 @@ load_dotenv()
 app = Flask(__name__)
 
 # Google Sheets API scope
-scope = ['https://www.googleapis.com/auth/spreadsheets']
+scope = [
+    'https://www.googleapis.com/auth/spreadsheets',
+    'https://www.googleapis.com/auth/drive'
+]
+
 
 # base64 인코딩된 GOOGLE_CREDENTIALS_BASE64 환경변수 읽기
 encoded = os.getenv("GOOGLE_CREDENTIALS_BASE64")
