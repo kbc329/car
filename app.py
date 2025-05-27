@@ -5,6 +5,9 @@ import os
 import json
 from datetime import datetime
 
+from dotenv import load_dotenv
+load_dotenv()
+
 app = Flask(__name__)
 
 # Google Sheets API scope
