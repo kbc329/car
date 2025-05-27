@@ -12,6 +12,8 @@ creds_json = os.getenv("GOOGLE_CREDENTIALS")  # ✅ 환경변수 이름 변경�
 if not creds_json:
     raise ValueError("GOOGLE_CREDENTIALS 환경변수가 설정되지 않았습니다.")
 
+creds_json = creds_json.replace("\\n", "\n")
+
 creds_dict = json.loads(creds_json)
 creds = Credentials.from_service_account_info(creds_dict)
 gc = gspread.authorize(creds)
