@@ -65,7 +65,7 @@ def index():
         return redirect("/")
 
     today = datetime.today().strftime("%Y-%m-%d")
-    return render_template("index.html", today=today)
+    return render_template("form.html", today=today)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))
