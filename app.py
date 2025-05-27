@@ -3,9 +3,10 @@ import gspread
 from google.oauth2.service_account import Credentials
 import os
 import json
+import base64
 from datetime import datetime
-
 from dotenv import load_dotenv
+
 load_dotenv()
 
 app = Flask(__name__)
@@ -13,22 +14,20 @@ app = Flask(__name__)
 # Google Sheets API scope
 scope = ['https://www.googleapis.com/auth/spreadsheets']
 
-# 환경변수에서 서비스 계정 JSON 정보 읽기
-creds_json = os.getenv("GOOGLE_CREDENTIALS")
-if not creds_json:
-    raise ValueError("GOOGLE_CREDENTIALS 환경변수가 설정되지 않았습니다.")
+# 환경변수에서 base64로 인코딩된 서비스 계정 JSON 읽기
+encoded = os.getenv("GOOGLE_CREDENTIALS_BASE64")
+if not encoded:
+    raise ValueError("환경변수 GOOGLE_CREDENTIALS_BASE64 가 없습니다.")
 
-# \n 이스케이프 처리 복구
-creds_json = creds_json.replace("\\n", "\n")
+# base64 디코딩 후 JSON 문자열 → dict 변환
+decoded = base64.b64decode(encoded).decode("utf-8")
+creds_dict = json.loads(decoded)
 
-# JSON 문자열 → dict로 변환
-creds_dict = json.loads(creds_json)
-
-# Credentials 생성 (scopes 반드시 포함!)
+# Credentials 생성
 creds = Credentials.from_service_account_info(creds_dict, scopes=scope)
 gc = gspread.authorize(creds)
 
-# Google Sheets 열기 (시트 이름은 실제 사용 중인 시트 이름으로 맞추세요)
+# Google Sheets 열기 (시트 이름은 실제 사용 중인 이름으로 맞춰야 함)
 SHEET_NAME = "차량_영수증"
 sh = gc.open(SHEET_NAME)
 worksheet = sh.sheet1
@@ -46,7 +45,6 @@ def index():
             "사용자": request.form.get("user")
         }
 
-        # Google Sheets에 데이터 추가
         worksheet.append_row([
             data["날짜"],
             data["차종"],
