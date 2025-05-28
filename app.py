@@ -18,7 +18,6 @@ scope = [
     'https://www.googleapis.com/auth/drive'
 ]
 
-
 # base64 인코딩된 GOOGLE_CREDENTIALS_BASE64 환경변수 읽기
 encoded = os.getenv("GOOGLE_CREDENTIALS_BASE64")
 if not encoded:
@@ -44,14 +43,14 @@ worksheet = sh.sheet1
 def index():
     if request.method == "POST":
         data = {
-            "운용팀": request.form.get("team"),
-            "날짜": request.form.get("date"),
+            "운용팀": request.form.get("operation_team"),
             "차종": request.form.get("car_type"),
             "차량번호": request.form.get("car_number"),
             "사용용도": request.form.get("usage"),
             "사용처": request.form.get("place"),
             "사용금액": request.form.get("amount"),
-            "사용자": request.form.get("user")
+            "사용자": request.form.get("user"),
+            "날짜": request.form.get("date")
         }
 
         worksheet.append_row([
