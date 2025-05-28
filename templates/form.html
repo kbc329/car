@@ -5,34 +5,48 @@
     <title>차량 소액 내역 입력</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             padding: 2em;
-            background-color: #f5f5f5;
+            background: linear-gradient(to bottom right, #f0f4f8, #d9e2ec);
         }
-        form {
+        .container {
             background-color: #fff;
             padding: 2em;
-            border-radius: 10px;
-            max-width: 500px;
+            border-radius: 15px;
+            max-width: 600px;
             margin: auto;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+        .logo {
+            width: 100px;
+            margin-bottom: 1em;
+        }
+        h2 {
+            margin-bottom: 1em;
+            color: #333;
+        }
+        form {
+            text-align: left;
         }
         input, select {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             margin-top: 1em;
             border: 1px solid #ccc;
-            border-radius: 5px;
+            border-radius: 8px;
         }
         button {
             margin-top: 1.5em;
-            padding: 10px;
+            padding: 12px;
             width: 100%;
             background-color: #4CAF50;
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
         }
         button:hover {
             background-color: #45a049;
@@ -40,44 +54,47 @@
     </style>
 </head>
 <body>
-    <h2 style="text-align:center;">차량 소액 내역 입력</h2>
-    <form action="/" method="post">
-        <label for="team">운용팀:</label>
-        <select id="team" name="team" required>
-            <option value="">선택하세요</option>
-            <option value="논산운용팀">논산운용팀</option>
-            <option value="동대전운용팀">동대전운용팀</option>
-            <option value="세종운용팀">세종운용팀</option>
-            <option value="서대전운용팀">서대전운용팀</option>
-            <option value="서산운용팀">서산운용팀</option>
-            <option value="천안운용팀">천안운용팀</option>
-            <option value="청주운용팀">청주운용팀</option>
-            <option value="충주운용팀">충주운용팀</option>
-            <option value="홍성운용팀">홍성운용팀</option>
-    </select>
+    <div class="container">
+        <img src="https://cdn-icons-png.flaticon.com/512/743/743920.png" alt="Car Icon" class="logo">
+        <h2>🚗 차량 소액 내역 입력 🚗</h2>
+        <form action="/" method="post">
+            <label for="team">운용팀:</label>
+            <select id="team" name="team" required>
+                <option value="">선택하세요</option>
+                <option value="논산운용팀">논산운용팀</option>
+                <option value="동대전운용팀">동대전운용팀</option>
+                <option value="세종운용팀">세종운용팀</option>
+                <option value="서대전운용팀">서대전운용팀</option>
+                <option value="서산운용팀">서산운용팀</option>
+                <option value="천안운용팀">천안운용팀</option>
+                <option value="청주운용팀">청주운용팀</option>
+                <option value="충주운용팀">충주운용팀</option>
+                <option value="홍성운용팀">홍성운용팀</option>
+            </select>
 
-        <label for="car_type">차종</label>
-        <input type="text" id="car_type" name="car_type" required placeholder="예: 소나타">
+            <label for="car_type">차종</label>
+            <input type="text" id="car_type" name="car_type" required placeholder="예: 소나타">
 
-        <label for="car_number">차량번호</label>
-        <input type="text" id="car_number" name="car_number" required placeholder="예: 12가1234">
+            <label for="car_number">차량번호</label>
+            <input type="text" id="car_number" name="car_number" required placeholder="예: 12가1234">
 
-        <label for="usage">사용용도</label>
-        <input type="text" id="usage" name="usage" required placeholder="예: 주차비">
+            <label for="usage">사용용도</label>
+            <input type="text" id="usage" name="usage" required placeholder="예: 주차비">
 
-        <label for="place">사용처</label>
-        <input type="text" id="place" name="place" required placeholder="예: 서울역 주차장">
+            <label for="place">사용처</label>
+            <input type="text" id="place" name="place" required placeholder="예: 서울역 주차장">
 
-        <label for="amount">사용금액</label>
-        <input type="number" id="amount" name="amount" required min="0" placeholder="예: 5000">
+            <label for="amount">사용금액</label>
+            <input type="number" id="amount" name="amount" required min="0" placeholder="예: 5000">
 
-        <label for="user">사용자</label>
-        <input type="text" id="user" name="user" required placeholder="예: 홍길동">
+            <label for="user">사용자</label>
+            <input type="text" id="user" name="user" required placeholder="예: 홍길동">
 
-        <label for="date">사용일자</label>
-        <input type="date" id="date" name="date" required>
+            <label for="date">사용일자</label>
+            <input type="date" id="date" name="date" required>
 
-        <button type="submit">제출</button>
-    </form>
+            <button type="submit">제출 🚀</button>
+        </form>
+    </div>
 </body>
 </html>
