@@ -43,7 +43,7 @@ worksheet = sh.sheet1
 def index():
     if request.method == "POST":
         data = {
-            "운용팀": request.form.get("operation_team"),
+            "운용팀": request.form.get("team"),
             "차종": request.form.get("car_type"),
             "차량번호": request.form.get("car_number"),
             "사용용도": request.form.get("usage"),
