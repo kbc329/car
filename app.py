@@ -42,8 +42,9 @@ worksheet = sh.sheet1
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
+        print("폼 데이터 수신 확인")
         data = {
-            "운용팀": request.form.get("team"),
+            "운용팀": request.form.get("team"),  # 여기 form.html의 select name="team" 맞게!
             "차종": request.form.get("car_type"),
             "차량번호": request.form.get("car_number"),
             "사용용도": request.form.get("usage"),
@@ -52,21 +53,28 @@ def index():
             "사용자": request.form.get("user"),
             "날짜": request.form.get("date")
         }
+        print("받은 데이터:", data)
 
-        worksheet.append_row([
-            data["운용팀"],
-            data["차종"],
-            data["차량번호"],
-            data["사용용도"],
-            data["사용처"],
-            data["사용금액"],
-            data["사용자"],
-            data["날짜"]
-        ])
+        try:
+            worksheet.append_row([
+                data["운용팀"],
+                data["차종"],
+                data["차량번호"],
+                data["사용용도"],
+                data["사용처"],
+                data["사용금액"],
+                data["사용자"],
+                data["날짜"]
+            ])
+            print("구글시트에 성공적으로 추가됨")
+        except Exception as e:
+            print(f"구글시트 쓰기 오류: {e}")
+
         return redirect("/")
 
     today = datetime.today().strftime("%Y-%m-%d")
     return render_template("form.html", today=today)
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))
