@@ -44,6 +44,7 @@ worksheet = sh.sheet1
 def index():
     if request.method == "POST":
         data = {
+            "운용팀": request.form.get("team"),
             "날짜": request.form.get("date"),
             "차종": request.form.get("car_type"),
             "차량번호": request.form.get("car_number"),
@@ -54,13 +55,14 @@ def index():
         }
 
         worksheet.append_row([
-            data["날짜"],
+            data["운용팀"],
             data["차종"],
             data["차량번호"],
             data["사용용도"],
             data["사용처"],
             data["사용금액"],
-            data["사용자"]
+            data["사용자"],
+            data["날짜"]
         ])
         return redirect("/")
 
