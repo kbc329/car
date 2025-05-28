@@ -43,7 +43,18 @@
     <h2 style="text-align:center;">차량 소액 내역 입력</h2>
     <form action="/" method="post">
         <label for="team">운용팀:</label>
-        <input type="text" id="team" name="team">
+        <select id="team" name="team" required>
+            <option value="">선택하세요</option>
+            <option value="논산운용팀">논산운용팀</option>
+            <option value="동대전운용팀">동대전운용팀</option>
+            <option value="세종운용팀">세종운용팀</option>
+            <option value="서대전운용팀">서대전운용팀</option>
+            <option value="서산운용팀">서산운용팀</option>
+            <option value="천안운용팀">천안운용팀</option>
+            <option value="청주운용팀">청주운용팀</option>
+            <option value="충주운용팀">충주운용팀</option>
+            <option value="홍성운용팀">홍성운용팀</option>
+    </select>
 
         <label for="car_type">차종</label>
         <input type="text" id="car_type" name="car_type" required placeholder="예: 소나타">
