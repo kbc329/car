@@ -1,6 +1,6 @@
 Flask
 gspread
-oauth2client
+google-auth
 gunicorn
 openpyxl
 python-dotenv
