@@ -70,7 +70,7 @@ def index():
         except Exception as e:
             print(f"구글시트 쓰기 오류: {e}")
 
-return redirect("/")
+        return redirect("/")
 
     today = datetime.today().strftime("%Y-%m-%d")
     return render_template("form.html", today=today)
