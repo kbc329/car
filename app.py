@@ -70,7 +70,14 @@ def index():
         except Exception as e:
             print(f"구글시트 쓰기 오류: {e}")
 
-        return redirect("/")
+       # 입력값 유지
+        saved_data["team"] = data["운용팀"]
+        saved_data["car_type"] = data["차종"]
+        saved_data["car_number"] = data["차량번호"]
+        saved_data["user"] = data["사용자"]
+
+        flash("저장 완료 ✅")
+        return redirect(url_for("index", **saved_data))
 
     today = datetime.today().strftime("%Y-%m-%d")
     return render_template("form.html", today=today)
